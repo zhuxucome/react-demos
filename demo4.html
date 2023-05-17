@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="./build/react.development.js"></script>
+    <script src="./build/react-dom.development.js"></script>
+    <script src="./build/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class Gradient extends React.Component {
+            state = {
+                opacity: 1.0
+            }
+
+            componentDidMount() {
+                this.interval = setInterval(() => {
+                    this.setState(({ opacity }) => ({
+                        opacity: opacity > 0.1 ? opacity - 0.05 : 1.0
+                    }))
+                }, 100);
+            }
+
+            componentWillUnmount() {
+                clearInterval(this.interval);
+            }
+
+            render() {
+                return (
+                    <div style={{ opacity: this.state.opacity }}>
+                        {this.props.prompt}    
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<Gradient prompt="请看效果" />, document.getElementById('root'));
+    </script>
+</body>
+</html>
